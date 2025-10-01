@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucia Tódová</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header placeholder -->
+    <div id="header"></div>
+
+
+    <main class="profile-layout">
+        <!-- Left Column placeholder -->
+        <!-- <div id="profile_pic_column"></div> -->
+
+        <!-- Right Column -->
+        <section class="right-column">
+            <h2 id="teaching">Teaching</h2>
+            <hr class="section-divider">
+
+            <h3>Current Semester</h3>
+            <p>No courses are being held in the current semester.</p>
+
+            <hr class="section-divider">
+            <h3>Thesis Supervision</h3>
+            <p>
+                I am open to supervising both Bachelor’s and Master’s theses in the field of Computer Graphics. <br> 
+                Potential topics of interest include, but are not limited to:
+            </p>
+            <ul class="supervision-topics">
+                <li>Light Transport Simulation</li>
+                <li>Spectral Rendering</li>
+                <li>Color Science</li>
+                <li>High Dynamic Range (HDR) Imaging</li>
+                <li>Volume Rendering</li>
+                <li>Camera Calibration</li>
+            </ul>
+            <p>
+                Students with their own project proposals related to these areas are also welcome to <a href="index.html#contact">reach out</a>.
+            </p>
+            <hr class="section-divider">
+            <h3>Previous Courses</h3>
+
+            <div class="course">
+                <h4>NPGR003 — Introduction to Computer Graphics</h4>
+                <p class="course-meta">
+                    <i>Winter 2025/2026</i> <span class="divider">|</span> Practicals
+                </p>
+                <p>
+                    Introductory course to Computer Graphics aimed mainly at Bachelor's students. <br>
+                    Focus on color models, vector and raster graphics, 3D graphics, OpenGL, etc.
+                </p>
+            </div>
+
+            <div class="course">
+                <h4>NPGR010 — Advanced 3D Graphics for Movies and Games</h4>
+                <p class="course-meta">
+                    <i> Winter 2021/2022</i> <span class="divider">|</span> Practicals
+                </p>
+                <p>
+                    Co-taught with <a href="https://tomasiser.com/" target="_blank">Tomáš Iser</a>.<br>
+                    Advanced Computer Graphics course for students of the Master's program. <br>
+                    Covering the basics of light transport, BRDF models, volume rendering, etc.<br>
+                    Practicals included the construction of a simple renderer from scratch. 
+                </p>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Footer placeholder -->
+    <div id="footer"></div>
+
+    <!-- Script to load header, left column, and footer -->
+    <script>
+        async function loadPart(id, file) {
+            const response = await fetch(file);
+            document.getElementById(id).innerHTML = await response.text();
+        }
+        loadPart("header", "header.html");
+        loadPart("profile_pic_column", "profile_pic_column.html");
+        loadPart("footer", "footer.html");
+    </script>
+</body>
+</html>

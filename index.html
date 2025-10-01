@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucia Tódová</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header placeholder -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="profile-layout">
+        <!-- Left Column placeholder -->
+        <div id="profile_pic_column"></div>
+
+        <!-- Right Column -->
+        <section class="right-column">
+            <h2 id="about">About Me</h2>
+            <p>
+                I am a postdoctoral researcher at Charles University in Prague, Czech Republic, where I am a part of the 
+                <a href="https://cgg.mff.cuni.cz/">Computer Graphics Group</a>.
+                I completed my Ph.D. under the supervision of <a href="https://cgg.mff.cuni.cz/~wilkie/Website/Home.html">Alexander Wilkie</a>,
+                with my dissertation focused on the specific topic of spectral uplifting and the advancements in that area. 
+                As part of my doctoral studies, I also spent six months at <a href="https://www.wetafx.co.nz/">Weta Digital</a> in Wellington, New Zealand,
+                where I gained valuable experience in integrating research into production rendering pipelines.
+            </p>
+            <p>
+                Apart from that, my work focuses on light transport, spectral rendering, material appearance, color science,
+                and also extends to volume rendering, image-based lighting (IBL), and HDR imaging.
+            </p>
+            <p>
+                At present, I continue to pursue research on material appearance and investigate how results of spectral light transport 
+                can be used to advance other aspects of rendering.
+                I also remain open to new directions and actively seek collaborations.
+            </p>
+
+            <hr class="section-divider">
+            <h3 id="contact">Contact</h3>
+            <dl class="contact-info">
+                <dt>Email:</dt>
+                <dd><a href="mailto:todova@gmail.com">todova@gmail.com</a></dd>
+                <dt>Office:</dt>
+                <dd>
+                    S126 (Carolina), 1st floor<br>
+                    KSVI MFF UK, Malostranské náměstí 25<br>
+                    11800 Praha 1, Czech Republic<br>
+                    <a href="tel:+420 95155 4203">+420 95155 4203</a> (office)
+                </dd>
+            </dl>
+
+        </section>
+    </main>
+
+    <!-- Footer placeholder -->
+    <div id="footer"></div>
+
+    <!-- Script to load header, left column, and footer -->
+    <script>
+        async function loadPart(id, file) {
+            const response = await fetch(file);
+            document.getElementById(id).innerHTML = await response.text();
+        }
+        loadPart("header", "header.html");
+        loadPart("profile_pic_column", "profile_pic_column.html");
+        loadPart("footer", "footer.html");
+    </script>
+</body>
+</html>
