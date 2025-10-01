@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucia Tódová</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header placeholder -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="profile-layout">
+        <!-- Left Column placeholder -->
+        <!-- <div id="profile_pic_column"></div> -->
+
+        <!-- Right Column -->
+        <section class="right-column">
+            <h2>Publications</h2>
+
+            <p>
+                This page presents a complete list of my publications, including links to the corresponding papers and, if applicable, respective presentations. <br>
+                It also features my theses related to the area of computer graphics and rendering. <br>
+                If you are interested in any additional supplemental materials not listed here, please feel free to <a href="index.html#contact">contact me</a>.
+            </p>
+
+            <div class="publication-list">
+
+                <div class="publication-item">
+                    <img src="images/thumbnail_thesis_PhD.png" alt="Thumbnail Pub1" class="pub-thumb">
+                    <div class="pub-info">
+                        <h3>
+                            <a href="files/thesis_PhD.pdf" target="_blank">
+                                Advances in Spectral Uplifting and Reconstruction
+                            </a>
+                        </h3>
+                         <p>
+                            <b>Lucia Tódová</b><br>
+                            supervised by Alexander Wilkie<br>
+                            <i>PhD Thesis (2025)</i> 
+                        </p>
+                        <p class="pub-links">
+                            <a href="files/thesis_PhD.pdf" target="_blank">Thesis</a> 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="images/thumbnail_paper_2025_env_maps.png" alt="Thumbnail Pub1" class="pub-thumb">
+                    <div class="pub-info">
+                        <h3>
+                            <a href="files/2025_env_map_uplifting_results.pdf" target="_blank">
+                                Constrained Spectral Uplifting for HDR Environment Maps
+                            </a>
+                        </h3>
+                         <p>
+                            <b>Lucia Tódová</b>, Alexander Wilkie<br>
+                            <i>Computer Graphics Forum 2025</i> 
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://doi.org/10.1111/cgf.15280" target="_blank">DOI</a> |
+                            <a href="files/2025_env_maps.bib" target="_blank">BibTeX</a> |
+                            <a href="files/2025_env_map_uplifting_results.pdf" target="_blank">Paper</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="images/thumbnail_paper_2024_env_maps.png" alt="Thumbnail Pub1" class="pub-thumb">
+                    <div class="pub-info">
+                        <h3>
+                            <a href="files/2024_env_map_uplifting.pdf" target="_blank">
+                                Constrained Spectral Uplifting for HDR Environment Maps
+                            </a>
+                        </h3>
+                         <p>
+                            <b>Lucia Tódová</b>, Alexander Wilkie<br>
+                            <i>EGSR 2024</i> <br>
+                            Conference proceedings, Symposium-only track
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://doi.org/10.2312/sr.20241153" target="_blank">DOI</a> |
+                            <a href="files/2024_env_maps.bib" target="_blank">BibTeX</a> |
+                            <a href="files/2024_env_map_uplifting.pdf" target="_blank">Paper</a> |
+                            <a href="https://www.youtube.com/watch?v=QAW7jFDDt2I" target="_blank">Presentation</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="images/thumbnail_paper_2022_moment_based.png" alt="Thumbnail Pub1" class="pub-thumb">
+                    <div class="pub-info">
+                        <h3>
+                            <a href="files/2022_wide_gamut_uplifting.pdf" target="_blank">
+                                Wide Gamut Moment-based Constrained Spectral Uplifting
+                            </a>
+                        </h3>
+                         <p>
+                            <b>Lucia Tódová</b>, Alexander Wilkie, Luca Fascione <br>
+                            <i>Computer Graphics Forum 2022</i>
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://doi.org/10.1111/cgf.14617" target="_blank">DOI</a> |
+                            <a href="files/2022_moments.bib" target="_blank">BibTeX</a> |
+                            <a href="files/2022_uplifting_constrained.pdf" target="_blank">Paper</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="images/thumbnail_thesis_MS.png" alt="Thumbnail Pub1" class="pub-thumb">
+                    <div class="pub-info">
+                        <h3>
+                            <a href="files/thesis_MS.pdf" target="_blank">
+                                Constrained Spectral Uplifting
+                            </a>
+                        </h3>
+                         <p>
+                            <b>Lucia Tódová</b><br>
+                            supervised by Alexander Wilkie<br>
+                            <i>Master's Thesis (2021)</i> 
+                        </p>
+                        <p class="pub-links">
+                            <a href="files/thesis_MS.bib" target="_blank">BibTeX</a> |
+                            <a href="files/thesis_MS.pdf" target="_blank">Thesis</a> 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="images/thumbnail_paper_2021_moment_based.png" alt="Thumbnail Pub1" class="pub-thumb">
+                    <div class="pub-info">
+                        <h3>
+                            <a href="files/2021_uplifting_constrained.pdf" target="_blank">
+                                Moment-based Constrained Spectral Uplifting
+                            </a>
+                        </h3>
+                         <p>
+                            <b>Lucia Tódová</b>, Alexander Wilkie, Luca Fascione <br>
+                            <i>EGSR 2021</i> <br>
+                            Conference proceedings, DL-only track
+                        </p>
+                        <p class="pub-links">
+                            <a href="https://doi.org/10.2312/sr.20211304" target="_blank">DOI</a> |
+                            <a href="files/2021_moments.bib" target="_blank">BibTeX</a> |
+                            <a href="files/2021_uplifting_constrained.pdf" target="_blank">Paper</a> |
+                            <a href=https://www.youtube.com/watch?v=WUBf30dzk3Q&t=6423s" target="_blank">Presentation</a> 
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Add more publications similarly -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer placeholder -->
+    <div id="footer"></div>
+
+    <!-- Script to load header, left column, and footer -->
+    <script>
+        async function loadPart(id, file) {
+            const response = await fetch(file);
+            document.getElementById(id).innerHTML = await response.text();
+        }
+        loadPart("header", "header.html");
+        loadPart("profile_pic_column", "profile_pic_column.html");
+        loadPart("footer", "footer.html");
+    </script>
+</body>
+</html>
