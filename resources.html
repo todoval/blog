@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucia Tódová</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header placeholder -->
+    <div id="header"></div>
+
+
+    <main class="profile-layout">
+        <!-- Left Column placeholder -->
+        <!-- <div id="profile_pic_column"></div> -->
+
+        <!-- Right Column -->
+        <section class="right-column">
+            <h2 id="resources">Resources</h2>
+            <p>
+                This page contains all the resources I've collected during my research.<br> 
+                If you decide to use them for your work, do not forget to include the respective citations. <br>
+                To cite the datasets as provided by me, please also include the following citation: <a href="citations/lt_datasets.bib" download>lt_datasets.bib</a>. <br>
+                For any questions, feel free to <a href="index.html">contact me</a>.
+            </p>
+
+            <div class="resource-list">
+
+                <div class="resource-item">
+                    <img src="images/resources_illum.png"
+                        class="resource-thumb"
+                        alt="Spectral Light Sources">
+
+                    <div class="resource-info">
+                        <h3><a href="resources_illuminants.html">Spectral Light Sources</a></h3>
+
+                        <p>
+                            Spectral emission curves collected from multiple measured light sources. <br>
+                            Primarily indoor lamps (LED / Incandescent / HID), but also daylight + sunset illumination.<br>
+                            <i> Total count: <strong>4928</strong> measurements</i> <br>
+                            <small><i>Note: Only visible wavelengths! (<code>380nm</code> to <code>~740nm</code>)</i></small>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <img src="images/resources_hyperspectral.png"
+                        class="resource-thumb"
+                        alt="Hyperspectral Captures">
+
+                    <div class="resource-info">
+                        <h3><a href="resources_hyperspectral.html">Hyperspectral Captures</a></h3>
+
+                        <p>
+                            Hyperspectral captures collected from multiple sources. <br>
+                            Only low-res available for immediate download, <a href="index.html">contact me</a> for high-res.<br>
+                            <i> Total count: <strong>146</strong> captures </i> <br>
+                            <small><i>Note: Only visible wavelengths! (<code>380nm</code> to <code>~740nm</code>)</i></small>
+                        </p>
+                    </div>
+                </div>
+        </div>
+
+    </main>
+
+
+    <!-- Footer placeholder -->
+    <div id="footer"></div>
+
+    <!-- Script to load header, left column, and footer -->
+    <script>
+        async function loadPart(id, file) {
+            const response = await fetch(file);
+            document.getElementById(id).innerHTML = await response.text();
+        }
+        loadPart("header", "header.html");
+        loadPart("profile_pic_column", "profile_pic_column.html");
+        loadPart("footer", "footer.html");
+    </script>
+</body>
+</html>

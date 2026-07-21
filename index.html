@@ -6,6 +6,7 @@
     <title>Lucia Tódová</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Header placeholder -->
     <div id="header"></div>
@@ -18,45 +19,79 @@
         <!-- Right Column -->
         <section class="right-column">
             <h2 id="about">About Me</h2>
+
             <p>
-                I am a postdoctoral researcher at Charles University in Prague, Czech Republic, where I am part of the 
-                <a href="https://cgg.mff.cuni.cz/">Computer Graphics Group</a>.
-                I completed my Ph.D. under the supervision of <a href="https://cgg.mff.cuni.cz/~wilkie/Website/Home.html">Alexander Wilkie</a>,
-                with my dissertation focused on the topic of spectral uplifting and advancements in the field. 
-                As part of my doctoral studies, I also spent six months at <a href="https://www.wetafx.co.nz/">Weta Digital</a> in Wellington, New Zealand,
+                I'm a postdoctoral light transport researcher based primarily in Prague, Czech Republic.
+                With a background in spectral rendering and material appearance, I am interested in applying the principles of light simulation to problems beyond computer graphics.
+                This includes seemingly unrelated areas ranging from remote sensing, Earth observation, climate modeling, through clothes fabrication, product manufacturing, medical imaging, and so much more.
+                <br>
+                I believe that, especially with the rapid advancements in computational methods during this era, we are now able to explore connections and applications that were previously out of reach.
+            </p>
+
+            <p>
+                I completed my Ph.D. at Charles University, Prague, where I was a part of the <a href="https://cgg.mff.cuni.cz/">Computer Graphics Group</a>.
+                My dissertation was focused on the topic of spectral uplifting, and I spent most of my PhD studies researchering the physically-based properties of material appearance.
+                During this time, I also spent six months at <a href="https://www.wetafx.co.nz/">Weta Digital</a> in Wellington, New Zealand,
                 where I gained valuable experience in integrating research into production rendering pipelines.
             </p>
+
             <p>
-                In addition, my work focuses on light transport, spectral rendering, material appearance, color science,
-                and also extends to volume rendering, image-based lighting (IBL), and HDR imaging.
+                Currently, my work entails multiple smaller projects primarily in the area of climate modeling and remote sensing. <br>
+                In case you'd like to connect and collaborate, or if you'd just like to talk, I'd be happy to hear from you!
             </p>
+            <br>
+            <h2 id="about">My Resources</h2>
             <p>
-                At present, I continue to pursue research on material appearance and investigate how the results of spectral light transport 
-                can be used to advance other aspects of rendering.
-                I also remain open to new directions and actively seek collaborations.
+                On this website, I also share multiple resources that I've collected during my research.
+                None of them are directly mine - however, their collection and processing took some time, which I hope to spare you. <br>
+                If you decide to use them for your purposes, I only ask you to also cite all of the respective citations.
             </p>
 
             <hr class="section-divider">
-            <h3 id="contact">Contact</h3>
-            <dl class="contact-info">
-                <dt>Email:</dt>
-                <dd><a href="mailto:todova@gmail.com">todova@gmail.com</a></dd>
-                <dt>Office:</dt>
-                <dd>
-                    S126 (Carolina), 1st floor<br>
-                    KSVI MFF UK, Malostranské náměstí 25<br>
-                    11800 Praha 1, Czech Republic<br>
-                    <a href="tel:+420 95155 4203">+420 95155 4203</a> (office)
-                </dd>
-            </dl>
 
-        </section>
+            <h2 id="news">News</h2>
+
+            <div class="news-list">
+                <div class="news-item">
+                    <span class="news-date">June 2026</span>
+                    Attended EGSR 2026 (Bordeaux, France).
+                </div>
+
+                <div class="news-item">
+                    <span class="news-date">June 2026</span>
+                    Served on the SIGGRAPH Asia 2026 committee.
+                </div>
+
+                <div class="news-item">
+                    <span class="news-date">Apr. 2025</span>
+                    Served on the EGSR 2026 committee.
+                </div>
+
+                <div class="news-item">
+                    <span class="news-date">Nov. 2025</span>
+                    Served on the Eurographics 2026 committee.
+                </div>
+
+                <div class="news-item">
+                    <span class="news-date">Nov. 2025</span>
+                    Started a collaboration on illumination capture with Inria Bordeaux.
+                </div>
+
+                <div class="news-item">
+                    <span class="news-date">Sep. 2025</span>
+                    Successfully defended my PhD thesis.
+                </div>
+
+            </div>
+
+
+            <hr class="section-divider">
+
     </main>
 
     <!-- Footer placeholder -->
     <div id="footer"></div>
 
-    <!-- Script to load header, left column, and footer -->
     <script>
         async function loadPart(id, file) {
             const response = await fetch(file);

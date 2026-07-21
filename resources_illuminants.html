@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucia Tódová</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+
+<script>
+
+const sources = [
+
+    {
+        name: "CIE Fluorescent",
+        dataset: "CIE",
+        category: "Fluorescent",
+        file: "lt_CIE_fluo.txt",
+        citation: "lt_cie.bib"
+    },
+
+    {
+        name: "CIE HID Compact",
+        dataset: "CIE",
+        category: "HID",
+        file: "lt_CIE_HID_CP.txt",
+        citation: "lt_cie.bib"
+    },
+
+    {
+        name: "CIE LED",
+        dataset: "CIE",
+        category: "LED",
+        file: "lt_CIE_LED.txt",
+        citation: "lt_cie.bib"
+    },
+
+    {
+        name: "CIE Outdoor",
+        dataset: "CIE",
+        category: "Outdoor",
+        file: "lt_CIE_outdoor.txt",
+        citation: "lt_cie.bib"
+    },
+
+
+    {
+        name: "Kider Outdoor",
+        dataset: "Kider",
+        category: "Outdoor",
+        file: "lt_kider_outdoor.txt",
+        citation: "lt_kider.bib"
+    },
+
+
+    {
+        name: "Kokka LED",
+        dataset: "Kokka",
+        category: "LED",
+        file: "lt_kokka_LED.txt",
+        citation: "lt_kokka.bib"
+    },
+
+
+    {
+        name: "LSPDD Biological",
+        dataset: "LSPDD",
+        category: "Biological",
+        file: "lt_LSPDD_biological.txt",
+        citation: "lt_lspdd.bib"
+    },
+
+    {
+        name: "LSPDD Fluorescent",
+        dataset: "LSPDD",
+        category: "Fluorescent",
+        file: "lt_LSPDD_fluo.txt",
+        citation: "lt_lspdd.bib"
+    },
+
+    {
+        name: "LSPDD Halogen",
+        dataset: "LSPDD",
+        category: "Halogen",
+        file: "lt_LSPDD_halogen.txt",
+        citation: "lt_lspdd.bib"
+    },
+
+    {
+        name: "LSPDD HID Metal Halide",
+        dataset: "LSPDD",
+        category: "HID",
+        file: "lt_LSPDD_HID_metalHalide.txt",
+        citation: "lt_lspdd.bib"
+    },
+
+    {
+        name: "LSPDD Incandescent",
+        dataset: "LSPDD",
+        category: "Incandescent",
+        file: "lt_LSPDD_inca.txt",
+        citation: "lt_lspdd.bib"
+    },
+
+    {
+        name: "LSPDD LED",
+        dataset: "LSPDD",
+        category: "LED",
+        file: "lt_LSPDD_LED.txt",
+        citation: "lt_lspdd.bib"
+    },
+
+
+    {
+        name: "Royer Fluorescent",
+        dataset: "Royer",
+        category: "Fluorescent",
+        file: "lt_royer_fluo.txt",
+        citation: "lt_royer.bib"
+    },
+
+    {
+        name: "Royer HID",
+        dataset: "Royer",
+        category: "HID",
+        file: "lt_royer_HID.txt",
+        citation: "lt_royer.bib"
+    },
+
+    {
+        name: "Royer Incandescent",
+        dataset: "Royer",
+        category: "Incandescent",
+        file: "lt_royer_inca.txt",
+        citation: "lt_royer.bib"
+    },
+
+    {
+        name: "Royer Laser",
+        dataset: "Royer",
+        category: "Laser",
+        file: "lt_royer_laser.txt",
+        citation: "lt_royer.bib"
+    },
+
+    {
+        name: "Royer LED",
+        dataset: "Royer",
+        category: "LED",
+        file: "lt_royer_LED.txt",
+        citation: "lt_royer.bib"
+    },
+
+    {
+        name: "Royer OLED",
+        dataset: "Royer",
+        category: "OLED",
+        file: "lt_royer_OLED.txt",
+        citation: "lt_royer.bib"
+    },
+
+    {
+        name: "Royer Plasma",
+        dataset: "Royer",
+        category: "Plasma",
+        file: "lt_royer_plasma.txt",
+        citation: "lt_royer.bib"
+    },
+
+
+    {
+        name: "PragueSkyModel Outdoor",
+        dataset: "Prague Sky Model",
+        category: "Outdoor",
+        file: "lt_pragueskymodel_outdoor.txt",
+        citation: "lt_pragueskymodel.bib"
+    }
+
+];
+
+
+// Current displayed data
+let currentSources = [...sources];
+
+
+// Sorting state
+let sortColumn = "";
+let sortAscending = true;
+
+// Selected rows
+let selectedSources = new Set();
+
+// Create table rows
+function displaySources(list) {
+
+    currentSources = [...list];
+
+    const table = document.getElementById("source-list");
+
+    table.innerHTML = "";
+
+
+    if (list.length === 0) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    No light sources found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+
+    list.forEach(source => {
+
+        const row = document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                <input 
+                    type="checkbox"
+                    class="source-checkbox"
+                    data-file="${source.file}">
+            </td>
+
+            <td>${source.name}</td>
+
+            <td>${source.dataset}</td>
+
+            <td>${source.category}</td>
+
+            <td>
+                <a href="resources/illuminants/${source.file}">
+                    ${source.file}
+                </a>
+            </td>
+
+            <td>
+                <a href="resources/citations/${source.citation}">
+                    .bib
+                </a>
+            </td>
+
+        `;
+
+
+        const checkbox = row.querySelector(".source-checkbox");
+
+
+        checkbox.addEventListener("change", function() {
+
+            if (this.checked) {
+
+                selectedSources.add(source.file);
+
+                row.classList.add("selected");
+
+            } else {
+
+                selectedSources.delete(source.file);
+
+                row.classList.remove("selected");
+
+            }
+
+        });
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+
+
+// Filter using dropdowns + search
+function applyFilters() {
+
+
+    const datasetFilter =
+        document.getElementById("dataset-filter")
+        .value;
+
+
+    const categoryFilter =
+        document.getElementById("category-filter")
+        .value;
+
+
+    const searchFilter =
+        document.getElementById("search-input")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+
+    const filteredSources = sources.filter(source => {
+
+
+        const datasetMatch =
+            datasetFilter === "all" ||
+            source.dataset === datasetFilter;
+
+
+
+        const categoryMatch =
+            categoryFilter === "all" ||
+            source.category === categoryFilter;
+
+
+
+        const searchMatch =
+            searchFilter === "" ||
+            source.name.toLowerCase().includes(searchFilter) ||
+            source.dataset.toLowerCase().includes(searchFilter) ||
+            source.category.toLowerCase().includes(searchFilter) ||
+            source.file.toLowerCase().includes(searchFilter);
+
+
+
+        return (
+            datasetMatch &&
+            categoryMatch &&
+            searchMatch
+        );
+
+    });
+
+
+
+    displaySources(filteredSources);
+
+}
+
+
+
+
+// Sort table columns
+function sortSources(column) {
+
+
+    if (sortColumn === column) {
+
+        sortAscending = !sortAscending;
+
+    } else {
+
+        sortColumn = column;
+        sortAscending = true;
+
+    }
+
+
+
+    const sorted = [...currentSources].sort((a, b) => {
+
+
+        const valueA = a[column].toLowerCase();
+        const valueB = b[column].toLowerCase();
+
+
+
+        if (valueA < valueB) {
+
+            return sortAscending ? -1 : 1;
+
+        }
+
+
+        if (valueA > valueB) {
+
+            return sortAscending ? 1 : -1;
+
+        }
+
+
+        return 0;
+
+    });
+
+
+
+    displaySources(sorted);
+
+}
+
+async function downloadSelected() {
+
+
+    if (selectedSources.size === 0) {
+
+        alert("No files selected.");
+
+        return;
+
+    }
+
+
+    const zip = new JSZip();
+
+
+    const illuminantsFolder = zip.folder("illuminants");
+
+    const citationsFolder = zip.folder("citations");
+
+
+
+    for (const file of selectedSources) {
+
+
+        const source = sources.find(
+            s => s.file === file
+        );
+
+
+        if (!source) {
+            continue;
+        }
+
+
+
+        // Add illuminant file
+
+        const illuminantResponse = await fetch(
+            "resources/illuminants/" + source.file
+        );
+
+
+        const illuminantData =
+            await illuminantResponse.text();
+
+
+        illuminantsFolder.file(
+            source.file,
+            illuminantData
+        );
+
+
+
+        // Add citation file
+
+        const citationResponse = await fetch(
+            "resources/citations/" + source.citation
+        );
+
+
+        const citationData =
+            await citationResponse.text();
+
+
+        citationsFolder.file(
+            source.citation,
+            citationData
+        );
+
+
+    }
+
+
+
+    const content = await zip.generateAsync({
+        type: "blob"
+    });
+
+
+
+    const link = document.createElement("a");
+
+
+    link.href = URL.createObjectURL(content);
+
+    link.download = "lt_lightSource_measurements.zip";
+
+
+    document.body.appendChild(link);
+
+
+    link.click();
+
+
+    document.body.removeChild(link);
+
+
+}
+
+// Load initial table
+document.addEventListener("DOMContentLoaded", () => {
+
+    displaySources(sources);
+
+
+    document
+    .getElementById("select-all")
+    .addEventListener("change", function() {
+
+        const checked = this.checked;
+
+
+        document
+        .querySelectorAll(".source-checkbox")
+        .forEach(box => {
+
+            box.checked = checked;
+
+
+            const row = box.closest("tr");
+
+
+            const file = box.dataset.file;
+
+
+            if (checked) {
+
+                selectedSources.add(file);
+
+                row.classList.add("selected");
+
+            } else {
+
+                selectedSources.delete(file);
+
+                row.classList.remove("selected");
+
+            }
+
+
+        });
+
+    });
+
+
+    document
+    .getElementById("download-selected")
+    .addEventListener("click", downloadSelected);
+
+
+});
+
+
+</script>
+
+<body>
+    <!-- Header placeholder -->
+    <div id="header"></div>
+
+
+    <main class="profile-layout">
+        <!-- Left Column placeholder -->
+        <!-- <div id="profile_pic_column"></div> -->
+
+        <!-- Right Column -->
+        <section class="right-column">
+
+            <nav class="breadcrumbs">
+                <a href="resources.html">Resources</a>
+                <span>›</span>
+                <span>Spectral Light Sources</span>
+            </nav>
+
+            <h1 id="illuminants">Spectral Light Sources</h1>
+            <p>
+                This page contains all the measurements of illuminants I've collected during my research.<br>
+                If you decide to use them for your work, do not forget to include the respective citations.<br> 
+                To cite the datasets as provided by me, please also include the following citation: <a href="citations/lt_illum_datasets.bib" download>lt_illum_datasets.bib</a>. <br>
+                In case you know of a dataset that could extend this list, or in case you find an error in the data,
+                please <a href="index.html">contact me</a>.
+            </p>
+            <br>
+            <h2 id="illuminants_sampling">Sampling</h2>
+            <p>
+                Every dataset is a simple <code>.txt</code> file that contains the numerical values of the samples.<br>
+                Each line corresponds to one light source measurement, with comma-separated samples starting at <code>380nm</code> with <code>1nm</code> increments. <br>
+                To read the measurements from a file to a single list, the following <a href="resources/scripts/illuminants_reader.py" download> Python script</a> can be used.
+            </p>
+            <p> <i> <small>
+                Note that the data is not in the typical <code>.csv</code> that everyone is used to. This is because it was designed to be compatible with the program that I was using for my previous research.<br>
+                Consequently, every provided measurement is also sampled with the same starting wavelength and the same increment, despite the original datasets sometimes providing different sampling rates.<br>
+            </small></i></p>
+        
+            <br>
+            <h2 id="illuminants_data">Datasets</h2>
+
+            <div class="dataset-grid">
+
+                <a href="https://en.wikipedia.org/wiki/Standard_illuminant" target="_blank" rel="noopener noreferrer" class="dataset-card">
+                    <img src="resources/illuminants_cie.png" alt="CIE Standard Illuminants">
+                    <div class="dataset-content">
+                        <h3>CIE</h3>
+                        <p>
+                            Standard reference illuminants defined by the CIE.<br>
+                            No actual measurements performed. 
+                        </p>
+                        <span>45 spectra, Reference</span>
+                    </div>
+                </a>
+
+                <a href="https://spectralskylight.github.io/" target="_blank" rel="noopener noreferrer" class="dataset-card">
+                    <img src="resources/illuminants_kider.png" alt="Kider Dataset">
+                    <div class="dataset-content">
+                        <h3>Kider et al.</h3>
+                        <p>
+                            Outdoor illumination spectra measured during daylight. <br>
+                            Precise measurements, little variability.
+                        </p>
+                        <span>20 spectra, Outdoor Daylight</span>
+                    </div>
+                </a>
+
+                <a href="https://iopscience.iop.org/article/10.1088/1681-7575/aacae7" target="_blank" rel="noopener noreferrer" class="dataset-card">
+                    <img src="resources/illuminants_kokka.png" alt="Kokka et al.">
+                    <div class="dataset-content">
+                        <h3>Kokka et al.</h3>
+                        <p>
+                            An extensive set of LED light bulb measurements. <br>
+                            CIE LEDs are derived from this dataset.
+                        </p>
+                        <span>1494 spectra, LED</span>
+                    </div>
+                </a>
+
+                <a href="https://lspdd.org/database" target="_blank" rel="noopener noreferrer" class="dataset-card">
+                    <img src="resources/illuminants_lspdd.png" alt="LSPDD">
+                    <div class="dataset-content">
+                        <h3>LSPDD</h3>
+                        <p>
+                            A collection of light source measurements spanning all the indoor categories. <br>
+                            High variability.
+                        </p>
+                        <span>213 spectra, Indoor</span>
+                    </div>
+                </a>
+
+                <a href="https://figshare.com/articles/dataset/Real_Light_Source_SPDs_and_Color_Data_for_Use_in_Research/12947240" target="_blank" rel="noopener noreferrer" class="dataset-card">
+                    <img src="resources/illuminants_royer.png" alt="Royer Dataset">
+                    <div class="dataset-content">
+                        <h3>Royer</h3>
+                        <p>
+                            A collection of light source measurements spanning all the indoor categories. <br>
+                            High variability, but vast majority is LED.
+                        </p>
+                        <span>1428 spectra, Indoor</span>
+                    </div>
+                </a> 
+
+                <a href="https://github.com/PetrVevoda/pragueskymodel" target="_blank" rel="noopener noreferrer" class="dataset-card">
+                    <img src="resources/illuminants_pragueskymodel.png" alt="PragueSkyModel Dataset">
+                    <div class="dataset-content">
+                        <h3>PragueSkyModel</h3>
+                        <p>
+                            Spectral measurements acquired for computer vision and
+                            illumination estimation experiments.
+                        </p>
+                        <span>1728 spectra, Outdoor</span>
+                    </div>
+                </a>
+
+            </div>
+            <br>
+
+            <h2 id="illuminants_data">Data</h2>
+
+            <div class="source-filters">
+
+                <div class="filter-group">
+
+                    <button id="download-selected">
+                        Download Selected
+                    </button>
+
+                    <label>
+                        Dataset:
+                        <select id="dataset-filter" onchange="applyFilters()">
+                            <option value="all">All</option>
+                            <option value="CIE">CIE</option>
+                            <option value="Kider">Kider</option>
+                            <option value="Kokka et al.">Kokka et al.</option>
+                            <option value="LSPDD">LSPDD</option>
+                            <option value="Royer">Royer</option>
+                            <option value="PragueSkyModel">PragueSkyModel</option>
+                        </select>
+                    </label>
+
+
+                    <label>
+                        Category:
+                        <select id="category-filter" onchange="applyFilters()">
+                            <option value="all">All</option>
+                            <option value="Biological">Biological</option>
+                            <option value="Fluorescent">Fluorescent</option>
+                            <option value="Halogen">Halogen</option>
+                            <option value="HID">HID</option>
+                            <option value="Incandescent">Incandescent</option>
+                            <option value="Laser">Laser</option>
+                            <option value="LED">LED</option>
+                            <option value="Outdoor">Outdoor</option>
+                            <option value="Plasma">Plasma</option>
+                        </select>
+                    </label>
+
+                </div>
+
+
+                <div class="search-group">
+
+                    <label>
+                        Search:
+                        <input 
+                            type="text"
+                            id="search-input"
+                            placeholder="Search..."
+                            oninput="applyFilters()"
+                        >
+                    </label>
+
+                </div>
+
+            </div>
+
+        <table class="source-table">
+
+            <thead>
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" id="select-all">
+                            &nbsp;&nbsp;Select
+                        </label>
+                    </th>
+
+                    <th onclick="sortSources('name')">Name ↕</th>
+                    <th onclick="sortSources('dataset')">Dataset ↕</th>
+                    <th onclick="sortSources('category')">Category ↕</th>
+                    <th onclick="sortSources('file')">File ↕</th>
+                    <th>Citation</th>
+                </tr>
+            </thead>
+
+            <tbody id="source-list"></tbody>
+
+        </table>
+
+    </main>
+
+
+    <!-- Footer placeholder -->
+    <div id="footer"></div>
+
+    <!-- Script to load header, left column, and footer -->
+    <script>
+        async function loadPart(id, file) {
+            const response = await fetch(file);
+            document.getElementById(id).innerHTML = await response.text();
+        }
+        loadPart("header", "header.html");
+        loadPart("profile_pic_column", "profile_pic_column.html");
+        loadPart("footer", "footer.html");
+    </script>
+</body>
+</html>

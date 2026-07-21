@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucia Tódová</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<script>
+async function downloadDataset(dataset) {
+
+    const zip = new JSZip();
+
+    let files = [];
+    let zipName = dataset;
+    let handledDirectly = false;
+
+
+    if (dataset === "lt_morimoto") {
+
+        for (let i = 0; i < 10; i++) {
+            files.push(`resources/hyperspectral/lt_morimoto/img${i}.txt`);
+            files.push(`resources/hyperspectral/lt_morimoto/img${i}.exr`);
+        }
+
+    }
+
+
+    else if (dataset === "lt_hs_dataset") {
+
+        handledDirectly = true;
+
+        const indoorFolder = zip.folder("lt_hs_indoor");
+        const outdoorFolder = zip.folder("lt_hs_outdoor");
+
+
+        for (let i = 0; i < 27; i++) {
+
+            for (const ext of ["txt", "exr"]) {
+
+                const path = `resources/hyperspectral/lt_hs_indoor/img${i}.${ext}`;
+
+                const response = await fetch(path);
+
+                if (!response.ok) {
+                    console.error("Missing:", path);
+                    continue;
+                }
+
+                indoorFolder.file(`img${i}.${ext}`, await response.blob());
+            }
+        }
+
+
+        for (let i = 0; i < 51; i++) {
+
+            for (const ext of ["txt", "exr"]) {
+
+                const path = `resources/hyperspectral/lt_hs_outdoor/img${i}.${ext}`;
+
+                const response = await fetch(path);
+
+                if (!response.ok) {
+                    console.error("Missing:", path);
+                    continue;
+                }
+
+                outdoorFolder.file(`img${i}.${ext}`, await response.blob());
+            }
+        }
+
+    }
+
+
+    else if (dataset === "lt_hssod") {
+
+        for (let i = 0; i < 61; i++) {
+            files.push(`resources/hyperspectral/lt_hssod/img${i}.txt`);
+            files.push(`resources/hyperspectral/lt_hssod/img${i}.exr`);
+        }
+
+    }
+
+
+    // Only do this for datasets using the files array
+    if (!handledDirectly) {
+
+        const folder = zip.folder(zipName);
+
+        for (const file of files) {
+
+            const response = await fetch(file);
+
+            if (!response.ok) {
+                console.error("Missing file:", file);
+                continue;
+            }
+
+            const blob = await response.blob();
+
+            const filename = file.split("/").pop();
+
+            folder.file(filename, blob);
+        }
+    }
+
+
+    const content = await zip.generateAsync({
+        type: "blob"
+    });
+
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(content);
+    link.download = zipName + ".zip";
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+}
+
+</script>
+
+<body>
+    <!-- Header placeholder -->
+    <div id="header"></div>
+
+
+    <main class="profile-layout">
+        <!-- Left Column placeholder -->
+        <!-- <div id="profile_pic_column"></div> -->
+
+        <!-- Right Column -->
+        <section class="right-column">
+
+            <nav class="breadcrumbs">
+                <a href="resources.html">Resources</a>
+                <span>›</span>
+                <span>Hyperspectral Captures</span>
+            </nav>
+
+            <h1 id="hyperspectral">Hyperspectral Captures</h1>
+            <p>
+                This page contains all the hyperspectral capture data I've collected during my research.<br>
+                If you decide to use them for your work, do not forget to include the respective citations.<br> 
+                To cite the datasets as provided by me, please also include the following citation: <a href="citations/lt_hyperspectral_datasets.bib" download>lt_hyperspectral_datasets.bib</a>. <br>
+                In case you know of a dataset that could extend this list, or in case you find an error in the data,
+                please <a href="index.html">contact me</a>.
+            </p>
+            <br>
+            <h2 id="hyperspectral_data">Data Organization</h2>
+            <p>
+                Every dataset contains multiple files, each corresponding to a single image.
+                The structure of each file is as follows:
+            </p>
+            <ul>
+                <li>
+                    The first line contains <code>image height</code> (number of pixels)
+                </li>
+                <li>
+                    The second line contains <code>image width</code> (number of pixels)
+                </li>
+                <li>
+                    Each following line contains comma-separated spectral samples of a single pixel, sampled starting at <code>380nm</code> with <code>10nm</code> increments.<br>
+                </li>
+            </ul>
+            
+            <p> <br>
+                To read and manipulate the data, feel free to use my <a href="resources/scripts/hyperspectral_reader.py" download> Python script</a>. <br>
+                In addition to loading the data, it also provides a conversion into RGB and their further export into an <code>.exr</code> file.
+            </p>
+
+            <small><p> <i> 
+                Note that, in my research, I used the individual measurements to simulate illumination. This raised multiple issues with scaling of the SPDs.<br>
+                Therefore, some of the data may be scaled to match rendering conditions, or simply for visualization purposes.<br>
+                This does not, in any way, affect the shape of the spectra.
+           </i></p> </small>
+
+            <br>
+            <h2 id="hyperspectral_downsampling">Data Downsampling</h2>
+            <p>
+                Unfortunately, some of the original datasets had an extremely detailed resolution and were too large to use for testing purposes during my research (and also to upload).
+                Therefore, I created their "downscaled" versions (= that only store every Nth pixel), which are the versions that I provide here. <br>
+                For the original data, feel free to <a href="index.html">contact me</a> - however, note that the size is in gigabytes.
+            </p>
+            <br>
+            <h2 id="hyperspectral_data">Datasets</h2>
+
+            <div class="resource-list">
+
+                <div class="resource-item">
+                    <img
+                        src="resources/hyperspectral_morimoto.png"
+                        class="resource-thumb"
+                        alt="Morimoto Dataset">
+
+                    <div class="resource-info">
+                        <h3>
+                            <a href="https://opg.optica.org/oe/fulltext.cfm?uri=oe-32-20-34246"  target="_blank" rel="noopener noreferrer">Morimoto Dataset</a>
+                        </h3>
+
+                        <p>
+                            <b><i>Outdoor</i></b> <br> <br>
+                            High-precision environment map captures, little variability.<br>
+                            While some of the captures were performed indoors, the source of illumination is always solely outdoor lighting.<br><br>
+                            <i>Total count: <strong>10</strong></i>
+                        </p>
+
+                        <div class="resource-links">
+                            <a href="#" onclick="downloadDataset('lt_morimoto'); return false;">
+                                ⇩ Download Data
+                            </a>
+                            <span>|</span>
+                            <a href="resources/citations/lt_morimoto.bib" download>⇩ .bib</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <img
+                        src="resources/hyperspectral_hsdataset.png"
+                        class="resource-thumb"
+                        alt="HS Dataset">
+
+                    <div class="resource-info">
+                        <h3>
+                            <a href="https://vision.seas.harvard.edu/hyperspec/" target="_blank" rel="noopener noreferrer">
+                                HyperSpectral Dataset
+                            </a>
+                        </h3>
+
+                        <p>
+                            <b><i>Indoor & Outdoor</i></b><br> <br>
+                            
+                            A collection of high-variety captures by Chakrabarti and Zickler.<br>
+                            The majority of them are closeups & unsuitable for image-based lighting.<br>
+                            Indoor captures do not have light source information - there is a possibility that the illumination is still coming "through a window".<br><br>
+                            <i>Total count: <strong>26</strong> Indoor & <strong>50</strong> Outdoor </i>
+                        </p>
+
+                        <div class="resource-links">
+                            <a href="#" onclick="downloadDataset('lt_hs_dataset'); return false;">
+                                ⇩ Download Data
+                            </a>
+                            <span>|</span>
+                            <a href="resources/citations/lt_chakrabarti_zickler.bib" download>⇩ .bib</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HSSOD Dataset -->
+                <div class="resource-item">
+                    <img
+                        src="resources/hyperspectral_hssod.png"
+                        class="resource-thumb"
+                        alt="HSSOD Dataset">
+
+                    <div class="resource-info">
+                        <h3>
+                            <a href="https://github.com/gistairc/HS-SOD" target="_blank" rel="noopener noreferrer"> HS-SOD Dataset</a>
+                        </h3>
+
+                        <p>
+                            <b><i>Outdoor</i></b><br>
+                            <br>
+                            Closeup captures of varying objects in outdoor environments. <br>
+                            Not suitable for image-based lighting due to distinct nature of the project. <br>
+                            High variability in the subjects, but beware of the warm tint (CCT estimation issues). <br>
+                            
+                            <br>
+                            <i>Total count: <strong>60</strong><br> </i>
+                        </p>
+
+                        <div class="resource-links">
+                            <a href="#" onclick="downloadDataset('lt_hssod'); return false;">
+                                ⇩ Download Data
+                            </a>
+                            <span>|</span>
+                            <a href="resources/citations/lt_hssod.bib" download>⇩ .bib</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+    </main>
+
+
+    <!-- Footer placeholder -->
+    <div id="footer"></div>
+
+    <!-- Script to load header, left column, and footer -->
+    <script>
+        async function loadPart(id, file) {
+            const response = await fetch(file);
+            document.getElementById(id).innerHTML = await response.text();
+        }
+        loadPart("header", "header.html");
+        loadPart("profile_pic_column", "profile_pic_column.html");
+        loadPart("footer", "footer.html");
+    </script>
+</body>
+</html>
